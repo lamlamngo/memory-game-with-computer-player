@@ -286,6 +286,18 @@ public class PlayMemoryGame extends JFrame {
     }
     
     /**
+     * Update turns and match count
+     */
+    private void turnUpdate(){
+        turnCounter.setText(turn + turnCount);
+        yourMatch.setText(you + myGame.getMatchCounter());
+        if (playComputer){
+            computerMatch.setText(computer + hal.getMatchCount());
+        }
+        memoryPanel.revalidate();
+    }
+    
+    /**
      * CanvasPanel is the class upon which we actually draw.  It listens
      * for mouse events.
      */
