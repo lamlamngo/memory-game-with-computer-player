@@ -1,4 +1,8 @@
 import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +25,67 @@ public class PlayMemoryGame extends JFrame {
     private Timer timer;
     private int time;
 
+    
+    
+    
+    
+    
+    
+    /**
+     * CanvasPanel is the class upon which we actually draw.  It listens
+     * for mouse events.
+     */
+    private class CanvasPanel extends JPanel implements MouseListener, MouseMotionListener {
+        private static final long serialVersionUID = 0;
+
+        /**
+         * Constructor just needs to set up the CanvasPanel as a listener.
+         */
+        public CanvasPanel() {
+            addMouseListener(this);
+            addMouseMotionListener(this);
+
+        }
+
+        /**
+         * Paint the whole drawing.
+         * if it is in tutorial, printout the tutorial message.
+         * @page the Graphics object to draw on
+         */
+        public void paintComponent(Graphics page) {
+            super.paintComponent(page);
+            myGame.display(page);
+        }
+
+        /**
+         * When the mouse is clicked, check to see if setgame can remove card and if the game ends.
+         */
+        public void mouseClicked(MouseEvent event) {
+        }
+
+        //we don't use these.
+        public void mousePressed(MouseEvent event) {
+            int result = myGame.getCards(event.getPoint());
+            if (result == 1){
+                remove = true;
+                turnUpdate();
+            }else if (result == 0){
+                turnUpdate();
+                remove = false;
+            }else{
+                remove = false;
+                turnCount++;
+            }
+            repaint();
+        }
+
+        public void mouseDragged(MouseEvent event)  { }
+        public void mouseReleased(MouseEvent event) { }
+        public void mouseEntered(MouseEvent event) { }
+        public void mouseExited(MouseEvent event) { }
+        public void mouseMoved(MouseEvent event) { }
+    }
+    
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
