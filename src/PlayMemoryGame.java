@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -295,6 +296,106 @@ public class PlayMemoryGame extends JFrame {
             computerMatch.setText(computer + hal.getMatchCount());
         }
         memoryPanel.revalidate();
+    }
+
+    /**
+     * What to do when play computer button is pressed
+     */
+    private class ComputerButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainTheme.stop();
+            turnCount = 0;
+            String[] options = { "easy", "medium","insane"};
+            int result = JOptionPane.showOptionDialog((Component) null,
+                    "which mode do you want to play?",
+                    "Computer Mode",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2]);
+            if (result != -1){
+                time = 0;
+                computerMatch.setVisible(true);
+                computerMatch.setText(computer + 0);
+                cp.removeAll();
+                cp.add(memoryPanel,BorderLayout.EAST);
+                cp.add(canvasPanel,BorderLayout.CENTER);
+                cp.revalidate();
+                myGame.reDeal();
+                myGame.deSelectCards();
+                hal = new ComputerAI(myGame.getUserChoices(),myGame.getDeck(),result);
+                playComputer  = true;
+                if (result == 0){
+                    gameMode.setText("easy mode");
+                }else if (result == 1){
+                    gameMode.setText("medium mode");
+                }else if (result == 2){
+                    gameMode.setText("INSANE");
+                }
+            }
+            turnUpdate();
+            repaint();
+        }
+    }
+
+    /**
+     * What to do when Solo Mode Button is pressed is pressed.
+     */
+    private class SoloModeButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainTheme.stop();
+            myGame.reDeal();
+            time = 0;
+            turnCount = 0;
+            cp.removeAll();
+            gameMode.setText("Solo Mode");
+            playComputer = false;
+            computerMatch.setVisible(false);
+            turnUpdate();
+            cp.add(memoryPanel,BorderLayout.EAST);
+            cp.add(canvasPanel,BorderLayout.CENTER);
+            cp.revalidate();
+            repaint();
+        }
+    }
+
+    /**
+     * What to do when Music is pressed.
+     */
+    private class MusicButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainTheme.start();
+        }
+    }
+
+    /**
+     * What to do when Mute Button is pressed.
+     */
+    private class MuteButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainTheme.stop();
+        }
+    }
+
+    /**
+     * What to do when newGameButton is pressed.
+     */
+    private class NewGameButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            String[] options = { "yes", "no" };
+            int result = JOptionPane.showOptionDialog(null, "Are you sure?", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+            if (result == 0) {
+                myGame.reDeal();
+                turnCount = 0;
+                remove = false;
+                time = 0;
+                turnUpdate();
+            }
+            repaint();
+        }
     }
     
     /**
