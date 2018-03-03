@@ -26,7 +26,7 @@ public class Lam extends Shape {
      * @param page The page you wish to draw on
      */
     public void display(Graphics page) {
-        myPath = "/images/" + "Lam" + ".jpg";
+        myPath = "\\images\\" + "Lam" + ".jpg";
         img = loadImage(img, myPath);
         page.drawImage(img,x,y,null);
     }

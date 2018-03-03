@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -24,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -36,7 +38,6 @@ public class PlayMemoryGame extends JFrame {
 
     private MemoryGame myGame; //the memory game object that is going to play the game
     private static CanvasPanel canvasPanel;
-    private Container cp;
     private JPanel memoryPanel, menuPanel,picPanel;  //the panels of the game
     private CustomButton flipButton,removeButton, mainmenuButton, newGameButton, computerMode,
             soloMode, quitButton,logOut,music,mute;; // the various button
@@ -61,6 +62,7 @@ public class PlayMemoryGame extends JFrame {
     private Clip cardFlip;
     private JLabel picLabel;
     private BufferedImage myPicture; // group pic
+    private JFrame frame;
     
     public PlayMemoryGame() {
         try {
@@ -79,7 +81,7 @@ public class PlayMemoryGame extends JFrame {
 
         myPicture = null;
         try {
-            myPicture = ImageIO.read(MainGame.class.getResourceAsStream("images/groupPic.jpg"));
+            myPicture = ImageIO.read(new File("C:\\Users\\lamso\\memory-game-with-computer-player\\images\\groupPic.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -203,13 +205,14 @@ public class PlayMemoryGame extends JFrame {
         mainTheme.start();
         mainTheme.loop(Clip.LOOP_CONTINUOUSLY);
         
-        JFrame frame = new JFrame("Object-Oriented Memory Game");
+        frame = new JFrame("Object-Oriented Memory Game");
         frame.setLayout(new BorderLayout());
         frame.add(menuPanel, BorderLayout.NORTH);
         frame.add(picPanel, BorderLayout.CENTER);
 
         frame.setBackground(Color.magenta);
-        frame.setSize(APPLET_WIDTH, APPLET_HEIGHT);   	
+        frame.setSize(APPLET_WIDTH, APPLET_HEIGHT);
+        frame.setVisible(true);
     }
     
     /**
@@ -306,10 +309,10 @@ public class PlayMemoryGame extends JFrame {
                 time = 0;
                 computerMatch.setVisible(true);
                 computerMatch.setText(computer + 0);
-                cp.removeAll();
-                cp.add(memoryPanel,BorderLayout.EAST);
-                cp.add(canvasPanel,BorderLayout.CENTER);
-                cp.revalidate();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(memoryPanel,BorderLayout.EAST);
+                frame.getContentPane().add(canvasPanel,BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
                 myGame.reDeal();
                 myGame.deSelectCards();
                 hal = new ComputerAI(myGame.getUserChoices(),myGame.getDeck(),result);
@@ -323,7 +326,7 @@ public class PlayMemoryGame extends JFrame {
                 }
             }
             turnUpdate();
-            repaint();
+            frame.getContentPane().repaint();
         }
     }
 
@@ -336,15 +339,15 @@ public class PlayMemoryGame extends JFrame {
             myGame.reDeal();
             time = 0;
             turnCount = 0;
-            cp.removeAll();
+            frame.getContentPane().removeAll();
             gameMode.setText("Solo Mode");
             playComputer = false;
             computerMatch.setVisible(false);
             turnUpdate();
-            cp.add(memoryPanel,BorderLayout.EAST);
-            cp.add(canvasPanel,BorderLayout.CENTER);
-            cp.revalidate();
-            repaint();
+            frame.getContentPane().add(memoryPanel,BorderLayout.EAST);
+            frame.getContentPane().add(canvasPanel,BorderLayout.CENTER);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
         }
     }
 
@@ -382,7 +385,7 @@ public class PlayMemoryGame extends JFrame {
                 time = 0;
                 turnUpdate();
             }
-            repaint();
+            frame.getContentPane().repaint();
         }
     }
     
@@ -431,15 +434,15 @@ public class PlayMemoryGame extends JFrame {
                 turnUpdate();
             } else {
                 mainTheme.start();
-                cp.removeAll();
-                cp.add(menuPanel,BorderLayout.NORTH);
-                cp.add(picPanel, BorderLayout.CENTER);
-                cp.revalidate();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(menuPanel,BorderLayout.NORTH);
+                frame.getContentPane().add(picPanel, BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
             }
-            repaint();
+            frame.getContentPane().repaint();
             return true;
         }else{
-            repaint();
+            frame.getContentPane().repaint();
             return false;
         }
     }
@@ -457,7 +460,7 @@ public class PlayMemoryGame extends JFrame {
                     cardFlip.start();
                     cardFlip.setFramePosition(0);
                     turnUpdate();
-                    repaint();
+                    frame.getContentPane().repaint();
                     checkEnd();
                 }else{
                     remove = false;
@@ -466,7 +469,7 @@ public class PlayMemoryGame extends JFrame {
             }else{
                 JOptionPane.showMessageDialog(null, "please choose two cards first.");
             }
-            repaint();
+            frame.getContentPane().repaint();
         }
     }
 
@@ -482,12 +485,12 @@ public class PlayMemoryGame extends JFrame {
             if (result == 0){
                 myGame.deSelectCards();
                 mainTheme.start();
-                cp.removeAll();
-                cp.add(menuPanel,BorderLayout.NORTH);
-                cp.add(picPanel, BorderLayout.CENTER);
-                cp.revalidate();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(menuPanel,BorderLayout.NORTH);
+                frame.getContentPane().add(picPanel, BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
             }
-            repaint();
+            frame.getContentPane().repaint();
         }
     }
 
@@ -545,10 +548,10 @@ public class PlayMemoryGame extends JFrame {
                     cardFlip.start();
                     cardFlip.setFramePosition(0);
                     myGame.deSelectCards();
-                    repaint();
+                    frame.getContentPane().repaint();
                     JOptionPane.showMessageDialog(null, "Computer Turn");
                     hal.getCards();
-                    repaint();
+                    frame.getContentPane().repaint();
                     while (hal.computerTurn()){
                         turnUpdate();
                         if (checkEnd()){
@@ -558,7 +561,7 @@ public class PlayMemoryGame extends JFrame {
                         cardFlip.setFramePosition(0);
                         myGame.deSelectCards();
                         hal.getCards();
-                        repaint();
+                        frame.getContentPane().repaint();
                     }
                     myGame.deSelectCards();
                     cardFlip.start();
@@ -571,7 +574,7 @@ public class PlayMemoryGame extends JFrame {
             }else{
                 JOptionPane.showMessageDialog(null, "please choose two cards first.");
             }
-            repaint();
+            frame.getContentPane().repaint();
         }
     }
 
@@ -634,7 +637,7 @@ public class PlayMemoryGame extends JFrame {
                 turnCount++;
                 remove = false;
             }
-            repaint();
+            frame.getContentPane().repaint();
         }
 
         public void mouseDragged(MouseEvent event)  { }
@@ -646,7 +649,12 @@ public class PlayMemoryGame extends JFrame {
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new PlayMemoryGame ();
+			}
+		});
 	}
 
 }

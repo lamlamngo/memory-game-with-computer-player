@@ -26,7 +26,7 @@ public class Diamond extends Shape {
      * @param page The page you wish to draw on
      */
     public void display(Graphics page) {
-        myPath = "/images/" + getColor() + "_" + getShape() + "_" + getFilling() + ".png";
+        myPath = "\\images\\" + getColor() + "_" + getShape() + "_" + getFilling() + ".png";
         img = loadImage(img, myPath);
         page.drawImage(img,x,y,null);
     }

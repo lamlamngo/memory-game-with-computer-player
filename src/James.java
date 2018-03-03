@@ -26,7 +26,7 @@ public class James extends Shape {
      * @param page The page you wish to draw on
      */
     public void display(Graphics page) {
-        myPath = "/images/" + "james" + ".jpg";
+        myPath = "\\images\\" + "james" + ".jpg";
         img = loadImage(img, myPath);
         page.drawImage(img,x,y,null);
     }

@@ -27,7 +27,7 @@ public class Varun extends Shape {
      * @param page The page you wish to draw on
      */
     public void display(Graphics page) {
-        myPath = "/images/" + "Varun" + ".jpeg";
+        myPath = "\\images\\" + "Varun" + ".jpeg";
         img = loadImage(img, myPath);
         page.drawImage(img,x,y,null);
     }

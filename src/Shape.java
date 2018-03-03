@@ -138,8 +138,9 @@ public abstract class Shape {
      * @return img Image object containing the shape
      */
     protected BufferedImage loadImage(BufferedImage img, String path) {
+    	System.out.println("C:\\Users\\lamso\\memory-game-with-computer-player");
         try {
-          img = ImageIO.read(new File("C:\\Users\\lamso\\memory-game-with-computer-player" + path.replaceAll("/", "\\")));
+          img = ImageIO.read(new File("C:\\Users\\lamso\\memory-game-with-computer-player" + path));
         }
         catch (IOException ex) {
           // handle exception

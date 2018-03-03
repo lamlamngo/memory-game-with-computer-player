@@ -24,7 +24,7 @@ public class Barr extends Shape {
      * @param page The page you wish to draw on
      */
     public void display(Graphics page) {
-        myPath = "/images/" + "barr" + ".jpg";
+        myPath = "\\images\\" + "barr" + ".jpg";
         img = loadImage(img, myPath);
         page.drawImage(img,x,y,null);
     }

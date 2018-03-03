@@ -28,10 +28,10 @@ public class Rectangle extends Shape {
      */
 	public void display(Graphics page) {
         if (selected){
-            img = loadImage(img,"/images/chosen.PNG");
+            img = loadImage(img,"\\images\\chosen.PNG");
         }
         else {
-            img = loadImage(img, "/images/notchosen.PNG");
+            img = loadImage(img, "\\images\\notchosen.PNG");
         }
         page.drawImage(img,x,y,null);
     }
