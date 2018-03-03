@@ -20,6 +20,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -229,7 +230,60 @@ public class PlayMemoryGame extends JFrame {
         welcomeMes.setText("            Welcome to our game: " + userName);
     }
     
-    
+    /**
+     * Handle getting user name. Cover all the possiblities.
+     */
+    private void logIn(){
+        readMe = new FileRead(usersFile);
+        userName = JOptionPane.showInputDialog("Enter your 3 letter username.");
+        if (userName == null){
+            System.exit(0);
+        }else{
+            userName = userName.toUpperCase();
+        }
+        while (userName == "" || userName.length() != 3){
+            userName = JOptionPane.showInputDialog("The user name must be 3 characters, please try again").toUpperCase();
+        }
+        while ((readMe.hasNextToken() == true)) {
+            nextToken = readMe.nextToken();
+            if (nextToken.equals(userName)){
+                String[] options = { "yes", "use this id" };
+                int result = JOptionPane.showOptionDialog(null, "This username already exists, do you want to make your own?", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+                if (result == 0){
+                    taken = false;
+                    userName = JOptionPane.showInputDialog("make a new one");
+                    readMe = new FileRead(usersFile);
+                    if (userName == null){
+                        System.exit(0);
+                    }else{
+                        userName = userName.toUpperCase();
+                    }
+                    while (userName == "" || userName.length() != 3){
+                        userName = JOptionPane.showInputDialog("The user name must be 3 characters, please try again");
+                        if (userName == null){
+                            System.exit(0);
+                        }else{
+                            userName = userName.toUpperCase();
+                        }
+                    }
+                }else{
+                    taken = true;
+                }
+            }
+        }
+        try{
+            if (!taken){
+                writeMe.write(userName);
+            }
+        } catch (IOException ioe){
+
+        }
+        String personalHighScores = userName + ".txt";
+        writePersonalHighScores = new FileWrite(personalHighScores,true);
+        readPer = new FileRead(personalHighScores);
+    }
     
     /**
      * CanvasPanel is the class upon which we actually draw.  It listens
