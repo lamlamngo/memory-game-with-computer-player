@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -138,7 +139,7 @@ public abstract class Shape {
      */
     protected BufferedImage loadImage(BufferedImage img, String path) {
         try {
-          img = ImageIO.read(MainGame.class.getResourceAsStream(path));
+          img = ImageIO.read(new File("C:\\Users\\lamso\\memory-game-with-computer-player" + path.replaceAll("/", "\\")));
         }
         catch (IOException ex) {
           // handle exception

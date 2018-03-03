@@ -28,18 +28,6 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import MainGame.CanvasPanel;
-import MainGame.ComputerButtonListener;
-import MainGame.FlipButtonListener;
-import MainGame.LogOutButtonListener;
-import MainGame.MainMenuButtonListener;
-import MainGame.MusicButtonListener;
-import MainGame.MuteButtonListener;
-import MainGame.NewGameButtonListener;
-import MainGame.QuitButtonListener;
-import MainGame.RemoveButtonListener;
-import MainGame.SoloModeButtonListener;
-
 public class PlayMemoryGame extends JFrame {
     private static final String turn = "Turns: ";
     private static final String you = "Matches: ";
