@@ -41,6 +41,11 @@ public class PlayMemoryGame extends JFrame {
         } catch (IllegalAccessException e) {
             // handle exception
         }
+        
+        //Login Screen
+        loginPanel = new JPanel();
+        login = new JLabel("Log In");
+        username = new JTextField(3);
     }
     
     
