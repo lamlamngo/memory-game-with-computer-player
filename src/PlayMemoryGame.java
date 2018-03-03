@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class PlayMemoryGame extends JFrame {
     private MemoryGame myGame;
@@ -25,7 +27,21 @@ public class PlayMemoryGame extends JFrame {
     private Timer timer;
     private int time;
 
-    
+    public PlayMemoryGame() {
+        try {
+            // Set cross-platform Java L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
+    }
     
     
     
