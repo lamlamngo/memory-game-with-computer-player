@@ -399,6 +399,64 @@ public class PlayMemoryGame extends JFrame {
     }
     
     /**
+     * Check when the game ends and print high score if in solo mode
+     */
+    private boolean checkEnd() {
+        if (myGame.checkEndCondition()) {
+            String[] options = {"yes", "to main menu"};
+            String message;
+            if (playComputer){
+                if (myGame.getMatchCounter() < hal.getMatchCount()){
+                    message = "hal beats you. wanna play again?";
+                }else if (myGame.getMatchCounter() > hal.getMatchCount()){
+                    message = "you BEAT HAL. wanna play again?";
+                }else{
+                    message = "TIE GAME. wanna play again?";
+                }
+            }else{
+                try{
+                    writePersonalHighScores.write(turnCount + "");
+                    writePersonalHighScores.sortHighScore();
+                } catch (IOException ioe){
+
+                }
+                message = "you beat solo mode. wanna play again?";
+                String highscore= "Your score: " + turnCount + "\n" + "Your High score: ";
+                while (readPer.hasNextToken()){
+                    highscore += "\n" + readPer.nextToken();
+                }
+                JOptionPane.showMessageDialog(null, highscore);
+            }
+
+            int result = JOptionPane.showOptionDialog(null, message, "u the best",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+
+            if (result == 0) {
+                myGame.deSelectCards();
+                myGame.reDeal();
+                time = 0;
+                turnCount = 0;
+                if (playComputer){
+                    hal.newGame();
+                }
+                turnUpdate();
+            } else {
+                mainTheme.start();
+                cp.removeAll();
+                cp.add(menuPanel,BorderLayout.NORTH);
+                cp.add(picPanel, BorderLayout.CENTER);
+                cp.revalidate();
+            }
+            repaint();
+            return true;
+        }else{
+            repaint();
+            return false;
+        }
+    }
+    
+    /**
      * CanvasPanel is the class upon which we actually draw.  It listens
      * for mouse events.
      */
