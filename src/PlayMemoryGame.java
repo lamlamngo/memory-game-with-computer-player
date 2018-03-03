@@ -212,14 +212,21 @@ public class PlayMemoryGame extends JFrame {
         welcomeMes.setText("            Welcome to our game: " + userName);
         mainTheme.start();
         mainTheme.loop(Clip.LOOP_CONTINUOUSLY);
+        
+        JFrame frame = new JFrame("Object-Oriented Memory Game");
+        frame.setLayout(new BorderLayout());
+        frame.add(menuPanel, BorderLayout.NORTH);
+        frame.add(picPanel, BorderLayout.CENTER);
 
-        cp = getContentPane();
-        cp.setLayout(new BorderLayout());
-        cp.add(menuPanel, BorderLayout.NORTH);
-        cp.add(picPanel, BorderLayout.CENTER);
-
-        cp.setBackground(Color.magenta);
-        setSize(APPLET_WIDTH, APPLET_HEIGHT);   	
+        frame.setBackground(Color.magenta);
+        frame.setSize(APPLET_WIDTH, APPLET_HEIGHT);   	
+    }
+    
+    /**
+     * Update name when a new user logs in.
+     */
+    private void updateName(){
+        welcomeMes.setText("            Welcome to our game: " + userName);
     }
     
     
