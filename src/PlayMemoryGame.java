@@ -1,9 +1,11 @@
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,6 +13,11 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import MainGame.FlipButtonListener;
+import MainGame.NewGameButtonListener;
+import MainGame.QuitButtonListener;
+import MainGame.RemoveButtonListener;
 
 public class PlayMemoryGame extends JFrame {
     private MemoryGame myGame;
@@ -46,6 +53,30 @@ public class PlayMemoryGame extends JFrame {
         loginPanel = new JPanel();
         login = new JLabel("Log In");
         username = new JTextField(3);
+        
+        //Memory Panel to play Memory
+        memoryPanel = new JPanel();
+        newGameButton = new CustomButton("new game");
+        quitButton = new CustomButton("main menu");
+        removeButton = new CustomButton("remove");
+        flipButton = new CustomButton("flip");
+        turnCounter = new JLabel(turn + turnCount);
+        removeButton.setBackground(Color.white);
+        flipButton.setBackground(Color.white);
+        quitButton.setBackground(Color.white);
+        newGameButton.setBackground(Color.white);
+        memoryPanel.setBackground(Color.cyan);
+        memoryPanel.add(newGameButton);
+        memoryPanel.add(removeButton);
+        memoryPanel.add(flipButton);
+        memoryPanel.add(quitButton);
+        memoryPanel.add(turnCounter);
+        memoryPanel.setLayout(new BoxLayout(memoryPanel,BoxLayout.PAGE_AXIS));
+
+        newGameButton.addActionListener(new NewGameButtonListener());
+        quitButton.addActionListener(new QuitButtonListener());
+        flipButton.addActionListener(new FlipButtonListener());
+        removeButton.addActionListener(new RemoveButtonListener());
     }
     
     
