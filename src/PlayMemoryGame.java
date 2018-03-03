@@ -457,6 +457,152 @@ public class PlayMemoryGame extends JFrame {
     }
     
     /**
+     * What to do when Remove is pressed.
+     */
+    private class RemoveButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (myGame.removeandflipable()){
+                if (remove){
+                    JOptionPane.showMessageDialog(null, "that's a match!");
+                    myGame.removeSelected();
+                    remove = true;
+                    cardFlip.start();
+                    cardFlip.setFramePosition(0);
+                    turnUpdate();
+                    repaint();
+                    checkEnd();
+                }else{
+                    remove = false;
+                    JOptionPane.showMessageDialog(null, "Not a match, please flip!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "please choose two cards first.");
+            }
+            repaint();
+        }
+    }
+
+    /**
+     * What to do when Main menu Button is pressed.
+     */
+    private class MainMenuButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            String[] options = { "yes", "no" };
+            int result = JOptionPane.showOptionDialog(null, "Are you sure?", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+            if (result == 0){
+                myGame.deSelectCards();
+                mainTheme.start();
+                cp.removeAll();
+                cp.add(menuPanel,BorderLayout.NORTH);
+                cp.add(picPanel, BorderLayout.CENTER);
+                cp.revalidate();
+            }
+            repaint();
+        }
+    }
+
+    /**
+     * What to do when Quit Button is pressed.
+     */
+    private class QuitButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            String[] options = { "yes", "no" };
+            int result = JOptionPane.showOptionDialog(null, "Are you sure?", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+            if (result == 0){
+                System.exit(0);
+            }
+        }
+    }
+
+
+    /**
+     * What to do when log out button is pressed.
+     */
+    private class LogOutButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            String[] options = { "yes", "no" };
+            int result = JOptionPane.showOptionDialog(null, "Are you sure?", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+            if (result == 0){
+                String[] options1 = { "Log in", "quit" };
+                result = JOptionPane.showOptionDialog(null, "" +
+                                "You are logged out. Wanna log in again or quit?", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options1, options1[0]);
+                if (result == 0){
+                    logIn();
+                    mainTheme.start();
+                }else{
+                    System.exit(0);
+                }
+            }
+            updateName();
+        }
+    }
+
+    /**
+     * What to do when Flip is pressed.
+     */
+    private class FlipButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if(myGame.removeandflipable()){
+                if (remove){
+                    JOptionPane.showMessageDialog(null, "they are a match, don't flip");
+                }else if (playComputer){
+                    cardFlip.start();
+                    cardFlip.setFramePosition(0);
+                    myGame.deSelectCards();
+                    repaint();
+                    JOptionPane.showMessageDialog(null, "Computer Turn");
+                    hal.getCards();
+                    repaint();
+                    while (hal.computerTurn()){
+                        turnUpdate();
+                        if (checkEnd()){
+                            break;
+                        }
+                        cardFlip.start();
+                        cardFlip.setFramePosition(0);
+                        myGame.deSelectCards();
+                        hal.getCards();
+                        repaint();
+                    }
+                    myGame.deSelectCards();
+                    cardFlip.start();
+                    cardFlip.setFramePosition(0);
+                }else{
+                    cardFlip.start();
+                    cardFlip.setFramePosition(0);
+                    myGame.deSelectCards();
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "please choose two cards first.");
+            }
+            repaint();
+        }
+    }
+
+    /**
+     * @return  canvasWidth for playingDeck
+     */
+    public static int getCanvasWidth(){
+        return canvasPanel.getWidth();
+    }
+
+    /**
+     * @return canvasHeight for playingDeck
+     * @return
+     */
+    public static int getCanvasHeight(){
+        return canvasPanel.getHeight();
+    }
+    
+    /**
      * CanvasPanel is the class upon which we actually draw.  It listens
      * for mouse events.
      */
